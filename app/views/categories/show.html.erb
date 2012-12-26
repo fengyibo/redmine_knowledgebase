@@ -1,5 +1,9 @@
 <% html_title @category.title %>
 
+<div class="contextual">
+  <%= render :partial => "categories/jump_box" %>
+</div>
+
 <p id="category-crumbs" class="breadcrumb">
 	<%= link_to l(:label_kb_home), { :controller => 'articles', :action => 'index', :project_id => @project } %>
 	<% @category.ancestors.each do |ancestor| %>
@@ -7,6 +11,7 @@
 	<%= link_to ancestor.title, { :controller => 'categories', :action => 'show', :id => ancestor.id, :project_id=>@project } %>
 	<% end %>
 </p>
+
 <h2><%= @category.title %></h2>
 
 <% content_for :sidebar do %>
@@ -16,7 +21,7 @@
     <li><%= link_to_if_authorized l(:label_new_category), { :controller => 'categories', :action => 'new', :parent_id => @category.id, :project_id => @project}, :class => 'icon icon-add' %></li>
     <li><%= link_to_if_authorized l(:label_edit_category), { :controller => 'categories', :action => 'edit', :id => @category.id, :project_id => @project}, :class => 'icon icon-edit' %></li>
     <li><%= link_to_if_authorized l(:label_delete_category), { :controller => 'categories', :action => 'destroy', :id => @category.id, :project_id => @project}, :confirm => l(:text_are_you_sure), :method => :delete, :class => 'icon icon-del' %></li>
-	<li><!-- watcher_tag(@category, User.current) --></li>
+	<li><%= watcher_tag(@category, User.current) %></li>
 	</ul>
 	<h3><%= l(:title_browse_by_category) %></h3>
   <%= render :partial => "categories/tree" %>
